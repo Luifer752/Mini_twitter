@@ -6,11 +6,11 @@ from .models import Posts, Comment
 
 def index(request):
     posts = Posts.objects.all()
-    comments = Comment.objects.all()
-    context = {'posts': posts, 'comments': comments, 'title': 'Available posts'}
+    context = {'posts': posts, 'title': 'Available posts'}
     return render(request, 'posts/posts_adn_comments.html', context)
 
 
-def test(request):
-    print(dir(request))
-    return HttpResponse("<h1>POSTS TITLE</h1>")
+def comments_log(request):
+    comments = Comment.objects.all()
+    context = {'comments': comments}
+    return render(request, 'posts/comments_list.html', context)

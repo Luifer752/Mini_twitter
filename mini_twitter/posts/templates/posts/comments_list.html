@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Comments below:</h1>
+{% for com in comments %}
+    <div>
+        <p>{{com.user}}</p>
+        <p>{{com.post}}</p>
+        <p>{{com.content}}</p>
+        <p>{{com.created_at}}</p>
+    </div>
+<hr>
+{% endfor %}
+
+</body>
+</html>

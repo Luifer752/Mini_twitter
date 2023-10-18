@@ -9,19 +9,10 @@
     {% for post in posts %}
         <div>
             <p>{{ post.user }}</p>
-            <p>{{ post.title }}</p>
+            <p>{{ post.title.comment.content }}</p>
             <p>{{ post.content }}</p>
             <p>{{ post.created_at }}</p>
         </div>
-        {% for comment in comments %}
-
-            {% if comment.post.id == post.title.id %}
-                <div>
-                    <p>{{ comment.user }}</p>
-                    <p>{{ comment.content }}</p>
-                </div>
-            {% endif %}
-        {% endfor %}
         <hr>
     {% endfor %}
 </body>

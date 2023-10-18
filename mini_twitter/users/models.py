@@ -8,6 +8,5 @@ class Users(models.Model):
     profile_picture = models.ImageField(upload_to='users/profile_img', null=True, blank=True)
 
     def __str__(self):
-        return f'User {self.username},' \
-               f'email address is: {self.email}'
+        return f'{self.username}'
 
