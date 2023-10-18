@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    {% for post, comment in zip(posts, comments) %}
+        <div>
+            <p>{{post.user}}</p>
+            <p>{{post.title}}</p>
+            <p>{{post.content}}</p>
+            <p>{{comment.user}}</p>
+            <p>{{comment.content}}</p>
+        </div>
+        <hr>
+    {% endfor %}
+</body>
+</html>

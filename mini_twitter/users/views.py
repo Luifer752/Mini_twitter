@@ -5,9 +5,9 @@ from .models import Users
 
 
 def index(request):
-    user = Users.objects.all()
-    context = {'user': user}
-    return HttpResponse(user)
+    users = Users.objects.all()
+    context = {'users': users, 'title': 'Users list'}
+    return render(request, 'users/users_list.html', context)
 
 
 def test(request):
