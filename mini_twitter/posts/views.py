@@ -7,7 +7,7 @@ from .models import Posts, Comment
 def index(request):
     posts = Posts.objects.all()
     comments = Comment.objects.all()
-    context = {'post': posts, 'comment': comments, 'title': 'Available posts'}
+    context = {'posts': posts, 'comments': comments, 'title': 'Available posts'}
     return render(request, 'posts/posts_adn_comments.html', context)
 
 
