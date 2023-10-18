@@ -7,7 +7,7 @@ class Posts(models.Model):
     title = models.CharField(max_length=128)
     content = models.CharField(max_length=128)
 
-    crated_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class Comment(models.Model):
@@ -15,4 +15,4 @@ class Comment(models.Model):
     post = models.ForeignKey(Posts, on_delete=models.CASCADE)
     content = models.CharField(max_length=128)
 
-    crated_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
