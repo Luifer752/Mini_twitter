@@ -1,3 +1,15 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
-# Create your views here.
+from .models import Users
+
+
+def index(request):
+    user = Users.objects.all()
+    context = {'user': user}
+    return HttpResponse(user)
+
+
+def test(request):
+    print(dir(request))
+    return HttpResponse("<h1>USERS TITLE</h1>")
