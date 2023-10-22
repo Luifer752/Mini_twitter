@@ -4,5 +4,7 @@ from .views import index, comments_log
 
 urlpatterns = [
     path('', index, name="index"),
-    path('comments/', comments_log, name="comments_log")
+    path('<str:username>', index, name="filtered_index"),
+    path('comments/', comments_log, name="comments_log"),
+
 ]
