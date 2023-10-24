@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from .models import Posts, Comment
 
 
-def index(request, username=None):
+def posts_list(request, username=None):
     if username:
         posts = Posts.objects.filter(user__username=username)
     else:
