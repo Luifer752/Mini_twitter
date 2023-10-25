@@ -9,6 +9,7 @@ def posts_list(request, username=None):
         posts = Posts.objects.filter(user__username=username)
     else:
         posts = Posts.objects.all()
+
     context = {'posts': posts, 'title': 'Available posts'}
     return render(request, 'posts/posts_adn_comments.html', context)
 
