@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from .models import Posts, Comment
@@ -41,7 +41,11 @@ def filtered_posts(request, user_or_id=None):
 def add_post(request):
 
     if request.method == 'POST':
-        pass
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            print(form.cleaned_data)
+            post = Posts.objects.create(**form.cleaned_data)
+        return redirect('filtered_posts', post_id=post.pk)
     else:
         form = PostForm()
         return render(request, 'posts/add_post.html', {'form': form})
