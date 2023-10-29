@@ -1,25 +1,40 @@
+{% extends 'base.html' %}
+
 {% load static %}
+
 {% block content %}
 
 <head>
-    <meta  charset="UTF-8">
-    <title>{{title}}</title>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </head>
+<body style="background-color: #e1f0fc">
   <div class="container">
-    <h1>{{ title }}</h1>
+    <div class="d-flex justify-content-between align-items-center">
+      <h1>{{ title }}</h1>
+
+    </div>
     <div class="row">
       {% for post in posts %}
         <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
+          <div class="card mb-4 shadow-sm"  style="background-color: #fffaf2">
+            <a href="{% url 'filtered_user_list' username=post.user.username %}">
             <img src="{% if post.user.profile_picture %}{{ post.user.profile_picture.url }}{% else %}{% static 'img/default_img.jpg' %}{% endif %}" alt="{{ post.user.username }} {{ post.user.email }}" class="mr-3 rounded-circle" style="object-fit: cover; height: 60px; width: 60px;">
-            <div class="mr-3 rounded-circle">
+            </a>
+            <div class="card-body">
               <h5 class="card-title">{{ post.title }}</h5>
               <p class="card-text">{{ post.content }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <small class="text-muted">Posted by {{ post.user.username }}</small>
+                <small class="text-muted">
+                  <button type="button" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                    <a href="#"></a>
+                    See comments
+                  </button>
+                </small>
                 <small class="text-muted">{{ post.created_at|date:"d.m.Y H:i" }}</small>
               </div>
             </div>
@@ -28,4 +43,7 @@
       {% endfor %}
     </div>
   </div>
+</body>
+</html>
+
 {% endblock %}

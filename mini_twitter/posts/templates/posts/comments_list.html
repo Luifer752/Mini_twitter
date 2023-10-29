@@ -1,20 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Comments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #a1ccf0;
+        }
+        h1 {
+            background-color: #4267B2;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        .comment-container {
+            background-color: #fff;
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .comment {
+            margin-bottom: 15px;
+        }
+        .user {
+            font-weight: bold;
+        }
+        .created_at {
+            color: #777;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
-<h1>Comments below:</h1>
-{% for com in comments %}
-    <div>
-        <p>{{com.user}}</p>
-        <p>{{com.post}}</p>
-        <p>{{com.content}}</p>
-        <p>{{com.created_at}}</p>
-    </div>
-<hr>
-{% endfor %}
-
+    <h1>Comments:</h1>
+    {% for com in comments %}
+        <div class="comment-container">
+            <div class="user">{{com.user}}</div>
+            <div class="created_at">{{com.created_at}}</div>
+            <div class="content">{{com.content}}</div>
+        </div>
+    {% endfor %}
 </body>
 </html>
