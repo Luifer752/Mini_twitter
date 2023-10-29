@@ -10,7 +10,7 @@ class PostForm(forms.Form):
     title = forms.CharField(max_length=128, label='My title')
     content = forms.CharField(widget=forms.Textarea)
 
-    created_at = forms.DateTimeField(initial=timezone.now)
+
 
 
 

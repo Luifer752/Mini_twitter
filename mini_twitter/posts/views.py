@@ -45,7 +45,7 @@ def add_post(request):
         if form.is_valid():
             print(form.cleaned_data)
             post = Posts.objects.create(**form.cleaned_data)
-        return redirect('filtered_posts', post_id=post.pk)
+        return redirect('filtered_posts', user_or_id=post.pk)
     else:
         form = PostForm()
         return render(request, 'posts/add_post.html', {'form': form})
