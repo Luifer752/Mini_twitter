@@ -4,11 +4,8 @@ from django.http import HttpResponse
 from .models import Posts, Comment
 
 
-def posts_list(request, username=None):
-    if username:
-        posts = Posts.objects.filter(user__username=username)
-    else:
-        posts = Posts.objects.all()
+def posts_list(request):
+    posts = Posts.objects.all()
 
     context = {'posts': posts, 'title': 'Available posts'}
     return render(request, 'posts/posts_adn_comments.html', context)
@@ -20,10 +17,13 @@ def comments_log(request):
     return render(request, 'posts/comments_list.html', context)
 
 
-# def posts_by_user(request, user):
-#     posts = Posts.objects.all()
-#     context = {'posts': posts, 'title': 'Available posts'}
-#     for i in posts:
-#         if user == i.user:
-#             return render(request, 'posts/comments_list.html', context)
+def filtered_posts(request, user_or_id=None):
 
+    if user_or_id.isdigit():
+        posts = Posts.objects.filter(pk=user_or_id)
+    elif not user_or_id.isdigit():
+        user_or_id = user_or_id.capitalize()
+        posts = Posts.objects.filter(user__username=user_or_id)
+
+    context = {'posts': posts, 'title': 'Available posts'}
+    return render(request, 'posts/posts_adn_comments.html', context)
