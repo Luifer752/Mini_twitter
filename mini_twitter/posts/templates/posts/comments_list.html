@@ -1,48 +1,53 @@
 {% extends 'base.html' %}
-
-
-<head>
-    <meta charset="UTF-8">
-    <title>Comments</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #a1ccf0;
-        }
-        h1 {
-            background-color: #4267B2;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-        .comment-container {
-            background-color: #fff;
-            margin: 10px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .comment {
-            margin-bottom: 15px;
-        }
-        .user {
-            font-weight: bold;
-        }
-        .created_at {
-            color: #777;
-            font-size: 12px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Comments:</h1>
-    {% for com in comments %}
-        <div class="comment-container">
-            <div class="user">{{com.user}}</div>
-            <div class="created_at">{{com.created_at}}</div>
-            <div class="content">{{com.content}}</div>
-        </div>
-    {% endfor %}
-</body>
-</html>
+{% load widget_tweaks %}
+{% block content %}
+  <div class="container">
+    <h1 class="mt-5">Comments</h1>
+    <div class="row mt-3">
+      <div class="col-md-8 mx-auto">
+        <ul class="list-group">
+          {% for com in comments %}
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="user">
+                    <a href="{% url 'filtered_user_list' username=com.user.username %}">
+                  <strong>{{ com.user }}</strong>
+                    </a>
+                </div>
+                <div class="created_at text-muted">
+                  {{ com.created_at|date:"d.m.Y H:i" }}
+                </div>
+              </div>
+              <div class="content mt-2">{{ com.content }}</div>
+            </li>
+          {% endfor %}
+        </ul>
+        <li class="list-group-item">
+          <form method="post" action="{% url 'add_comment' %}">
+              {% csrf_token %}
+                    {% for field in form %}
+                        {% if field.name != 'created_at' %}
+                        <div class="row g-3">
+                            <div class="col-sm-12">
+                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ field.errors }}
+                                    </div>
+                                {% endif %}
+                                <div class="invalid-feedback">
+                                    Please enter {{ field.label }}.
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    <hr class="my-4">
+              <button type="submit" class="btn btn-primary mt-2">Add Comment</button>
+          </form>
+        </li>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from django.forms.widgets import HiddenInput
+from django.forms import ModelForm
 from users.models import Users
 from posts.models import Posts, Comment
 from django.utils import timezone
@@ -11,12 +11,9 @@ class PostForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea)
 
 
+class CommentForm(forms.ModelForm):
 
+    class Meta:
+        model = Comment
+        fields = ['user', 'post', 'content']
 
-
-class CommentForm(forms.Form):
-    user = forms.ModelChoiceField(queryset=Users.objects.all())
-    post = forms.ModelChoiceField(queryset=Posts.objects.all())
-    content = forms.CharField(max_length=256)
-
-    created_at = forms.DateTimeField(initial=timezone.now)

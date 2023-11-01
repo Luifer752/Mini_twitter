@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 
 from .models import Posts, Comment
@@ -45,7 +45,20 @@ def add_post(request):
         if form.is_valid():
             print(form.cleaned_data)
             post = Posts.objects.create(**form.cleaned_data)
-        return redirect('filtered_posts', user_or_id=post.pk)
+            return redirect('filtered_posts', user_or_id=post.pk)
     else:
         form = PostForm()
-        return render(request, 'posts/add_post.html', {'form': form})
+    return render(request, 'posts/add_post.html', {'form': form})
+
+
+def add_comment(request):
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+
+            comment = comment_form.save()
+            return redirect('post_comments', post_id=comment.post.pk)
+    else:
+        comment_form = CommentForm()
+    return render(request, 'posts/add_comment.html', {'comment_form': comment_form})
