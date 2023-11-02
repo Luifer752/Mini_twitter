@@ -25,7 +25,9 @@
                         <img src="{% static 'img/default_img.jpg' %}" alt="{{ user.username }} {{ user.email }}" class="mr-3 rounded-circle" style="height: 100px; width: 100px; object-fit: cover;">
                     {% endif %}
                     <div class="media-body">
+                        <a href="{% url 'filtered_user_list' username=user.username %}">
                         <h5 class="mt-0">{{ user.username}}</h5>
+                        </a>
                         <h6 class="mt-0">{{ user.email}}</h6>
                         <p> Date joined: {{ user.date_joined|date:'d.m.Y' }}</p>
                     </div>

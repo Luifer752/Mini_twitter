@@ -5,6 +5,7 @@ from .models import Users
 
 
 def users_list(request, username=None):
+
     if username:
         users = Users.objects.filter(username=username)
     else:
@@ -12,6 +13,8 @@ def users_list(request, username=None):
 
     context = {'users': users, 'title': 'Users list'}
     return render(request, 'users/users_list.html', context)
+
+
 
 
 
