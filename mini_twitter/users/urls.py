@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import users_list
+from .views import UsersListView
 
 
 
 urlpatterns = [
-    path('', users_list, name="users_list"),
-    path('<str:username>', users_list, name="filtered_user_list"),
+    path('', UsersListView.as_view(), name="users_list"),
+    path('<str:username>', UsersListView.as_view(), name="filtered_user_list"),
 
 ]
