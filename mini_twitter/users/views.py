@@ -7,10 +7,17 @@ from .models import Users
 class UsersListView(ListView):
     model = Users
     template_name = 'users/users_list.html'
-    context_object_name = 'user'
+    context_object_name = 'users'
 
 
+class FilteredUsersListView(ListView):
+    model = Users
+    template_name = 'users/users_list.html'
+    context_object_name = 'users'
 
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Users.objects.filter(pk=pk)
 
 
 # def users_list(request, username=None):
