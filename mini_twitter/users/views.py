@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import Users
 
 
@@ -10,14 +10,11 @@ class UsersListView(ListView):
     context_object_name = 'users'
 
 
-class FilteredUsersListView(ListView):
+class UserDetailView(DetailView):
     model = Users
-    template_name = 'users/users_list.html'
-    context_object_name = 'users'
+    template_name = 'users/user_details.html'
+    context_object_name = 'user'
 
-    def get_queryset(self):
-        pk = self.kwargs['pk']
-        return Users.objects.filter(pk=pk)
 
 
 # def users_list(request, username=None):
