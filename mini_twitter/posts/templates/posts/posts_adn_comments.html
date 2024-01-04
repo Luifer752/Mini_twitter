@@ -50,7 +50,7 @@
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm" style="background-color: #dae0f6">
                     <div class="profile-info">
-                        <a href="{% url 'filtered_user_list' username=post.user.username %}">
+                        <a href="{% url 'user_details' pk=user.pk %}">
                             <img src="{% if post.user.profile_picture %}{{ post.user.profile_picture.url }}{% else %}{% static 'img/default_img.jpg' %}{% endif %}" alt="{{ post.user.username }} {{ post.user.email }}" class="mr-3 rounded-circle">
                         </a>
                         <div>
