@@ -20,16 +20,16 @@
         }
 
         .profile-info img {
-            margin-right: 10px; /* Отступ справа от изображения */
+            margin-right: 10px;
             object-fit: cover;
             height: 40px;
             width: 40px;
-            border: 2px groove #1b3ed7; /* Добавляем рамку шириной 2px и цвета #fff (белый) */
+            border: 2px groove #1b3ed7;
             border-radius: 50%;
         }
 
         .user-name {
-            margin-bottom: 0; /* Убираем нижний отступ для имени пользователя */
+            margin-bottom: 0;
         }
 
         .post-image {
@@ -51,7 +51,7 @@
                 <div class="card mb-4 shadow-sm" style="background-color: #dae0f6">
                     <div class="profile-info">
                         <a href="{% url 'user_details' pk=user.pk %}">
-                            <img src="{% if post.user.profile_picture %}{{ post.user.profile_picture.url }}{% else %}{% static 'img/default_img.jpg' %}{% endif %}" alt="{{ post.user.username }} {{ post.user.email }}" class="mr-3 rounded-circle">
+                            <img src="{% if post.user.profile_picture %}{{ post.user.profile_picture.url }}{% else %}{% static 'img/user_img/default_user.jpg' %}{% endif %}" alt="{{ post.user.username }} {{ post.user.email }}" class="mr-3 rounded-circle">
                         </a>
                         <div>
                             <p class="user-name">{{ post.user }}</p>
@@ -61,7 +61,7 @@
                         {% if post.post_picture %}
                         <img src="{{ post.post_picture.url }}" alt="{{ post.user }}" class="img-fluid mb-3 post-image">
                         {% else %}
-                        <h5></h5>
+                        <img src="{% static 'img/post_img/default_post.jpg' %}" alt="Default Image" class="img-fluid mb-3 post-image">
                         {% endif %}
                         <h5 class="card-title">{{ post.title }}</h5>
                         <p class="card-text">{{ post.content }}</p>
