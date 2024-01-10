@@ -34,7 +34,9 @@ class PostCreateView(CreateView):
     template_name = 'posts/add_post.html'
 
     def get_success_url(self):
-        return reverse_lazy('books_list')
+        return reverse_lazy('posts_list')
+
+
 class CommentListView(ListView):
     model = Comment
     template_name = 'posts/posts_adn_comments.html'
