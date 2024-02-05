@@ -37,6 +37,7 @@ class PostCreateView(CreateView):
         return reverse_lazy('posts_list')
 
 
+
 class CommentListView(ListView):
     model = Comment
     template_name = 'posts/posts_adn_comments.html'
