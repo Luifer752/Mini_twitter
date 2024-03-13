@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'posts.apps.PostsConfig',
+    'custom_auth.apps.CustomAuthConfig',
     'widget_tweaks'
 ]
 
@@ -52,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# AUTH_USER_MODEL = 'custom_auth.CustomUser'
 
 ROOT_URLCONF = 'mini_twitter.urls'
 
