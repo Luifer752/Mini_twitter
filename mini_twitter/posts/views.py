@@ -4,6 +4,8 @@ from .models import Posts, Comment
 from .forms import CommentForm, PostForm
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 
 class PostListView(ListView):
@@ -28,41 +30,48 @@ class PostDetailView(DetailView):
     context_object_name = 'post'
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Posts
     form_class = PostForm
     template_name = 'posts/add_post.html'
 
     def get_success_url(self):
-        return reverse_lazy('posts_list')
+        return reverse_lazy('posts:posts_list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
-
-class CommentListView(ListView):
+class CommentListView(LoginRequiredMixin, ListView):
     model = Comment
     template_name = 'posts/posts_adn_comments.html'
     context_object_name = 'comment'
 
+    def get_success_url(self):
+        return reverse_lazy('posts:post_comments')
 
-# def posts_list(request):
-#     posts = Posts.objects.all()
-#     context = {'posts': posts, 'title': 'Available posts'}
-#     return render(request, 'posts/posts_adn_comments.html', context)
-#
-#
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
 def comments_log(request):
     comments = Comment.objects.all()
     context = {'comments': comments}
     return render(request, 'posts/comments_list.html', context)
 
 
-def post_comments(request, post_id=None):
+def post_comments(request, post_id):
+    post = get_object_or_404(Posts, pk=post_id)
+    comments = Comment.objects.filter(post=post)
+    form = CommentForm()
 
-    if post_id:
-        comments = Comment.objects.filter(post__pk=post_id)
-
-    context = {'comments': comments}
-    return render(request, 'posts/comments_list.html', context)
+    return render(request, 'posts/comments_list.html', {
+        'post': post,
+        'comments': comments,
+        'form': form
+    })
 
 
 def filtered_posts(request, user_or_id=None):
@@ -76,13 +85,20 @@ def filtered_posts(request, user_or_id=None):
     context = {'posts': posts, 'title': 'Available posts'}
     return render(request, 'posts/posts_adn_comments.html', context)
 
-def add_comment(request):
+
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Posts, pk=post_id)
+
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
 
-            comment = comment_form.save()
-            return redirect('post_comments', post_id=comment.post.pk)
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.user = request.user
+            comment.save()
+            return redirect('posts:post_comments', post_id=comment.post.pk)
     else:
         comment_form = CommentForm()
     return render(request, 'posts/add_comment.html', {'comment_form': comment_form})

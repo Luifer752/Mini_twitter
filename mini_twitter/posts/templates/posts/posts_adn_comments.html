@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <title>{{ title }}</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <script src="{% static 'js/jquery.min.js' %}"></script>
+
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <style>
         .profile-info {
@@ -50,7 +50,7 @@
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm" style="background-color: #dae0f6">
                     <div class="profile-info">
-                        <a href="{% url 'user_details' pk=post.user.pk %}">
+                        <a href="{% url 'users:user_details' pk=post.user.pk %}">
                             <img src="{% if post.user.profile_picture %}{{ post.user.profile_picture.url }}{% else %}{% static 'img/user_img/default_user.jpg' %}{% endif %}" alt="{{ post.user.username }} {{ post.user.email }}" class="mr-3 rounded-circle">
                         </a>
                         <div>
@@ -68,7 +68,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <small class="text-muted">Posted by {{ post.user.username }}</small>
                             <small class="text-muted">
-                                <a href="{% url 'post_comments' post_id=post.id  %}">
+                                <a href="{% url 'posts:post_comments' post_id=post.id  %}">
                                     <button type="button" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                                         See comments
                                     </button>

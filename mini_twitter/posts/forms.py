@@ -14,12 +14,12 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Posts
-        fields = ['user', 'title', 'post_picture', 'content']
+        fields = ['title', 'post_picture', 'content']
 
 
 class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ['user', 'post', 'content']
+        fields = ['content']
 

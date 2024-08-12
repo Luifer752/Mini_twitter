@@ -10,7 +10,7 @@
             <li class="list-group-item">
               <div class="d-flex justify-content-between align-items-center">
                 <div class="user">
-                    <a href="{% url 'filtered_user_list' username=com.user.username %}">
+                    <a href="">
                   <strong>{{ com.user }}</strong>
                     </a>
                 </div>
@@ -23,7 +23,8 @@
           {% endfor %}
         </ul>
         <li class="list-group-item">
-          <form method="post" action="{% url 'add_comment' %}">
+            {% if user.is_authenticated %}
+          <form method="post" action="{% url 'posts:add_comment' post_id=post.pk %}">
               {% csrf_token %}
                     {% for field in form %}
                         {% if field.name != 'created_at' %}
@@ -45,6 +46,7 @@
                     {% endfor %}
                     <hr class="my-4">
               <button type="submit" class="btn btn-primary mt-2">Add Comment</button>
+              {% endif %}
           </form>
         </li>
       </div>
