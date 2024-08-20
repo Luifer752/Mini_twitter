@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+
+
 <head>
     <meta  charset="UTF-8">
     <title>{{title}}</title>
@@ -23,10 +23,10 @@
                     {% if user.profile_picture %}
                         <img src="{{ user.profile_picture.url }}" alt="{{ user.username }} {{ user.email }}" class="mr-3 rounded-circle" style="height: 100px; width: 100px; object-fit: cover;">
                     {% else %}
-                        <img src="{% static 'img/default_img.jpg' %}" alt="{{ user.username }} {{ user.email }}" class="mr-3 rounded-circle" style="height: 100px; width: 100px; object-fit: cover;">
+                        <img src="{% static 'img/user_img/default_user.jpg' %}" alt="{{ user.username }} {{ user.email }}" class="mr-3 rounded-circle" style="height: 100px; width: 100px; object-fit: cover;">
                     {% endif %}
                     <div class="media-body">
-                        <a href="{% url 'users:user_details' pk=user.pk %}">
+                        <a href="{% url 'users:user_details' user_id=user.id %}">
                         <h5 class="mt-0">{{ user.username}}</h5>
                         </a>
                         <h6 class="mt-0">{{ user.email}}</h6>

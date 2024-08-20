@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth import login, logout
 from .forms import CustomUserCreateForm, LoginForm
-
+from users.models import Users
 
 class RegisterView(CreateView):
 
@@ -12,9 +12,11 @@ class RegisterView(CreateView):
     template_name = 'registration.html'
 
     def form_valid(self, form):
-        to_return = super().form_valid(form)
+        response  = super().form_valid(form)
+        user = self.object
+        Users.objects.create(user=user)
         login(self.request, self.object)    # self.object is the one created in registration form
-        return to_return
+        return response
 
 
 def login_view(request):
