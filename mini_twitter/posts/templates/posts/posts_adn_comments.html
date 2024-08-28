@@ -50,11 +50,13 @@
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm" style="background-color: #dae0f6">
                     <div class="profile-info">
-                        <a href="">
+                        <a href="{% url 'custom_auth:user_details' pk=post.user.id %}">
                             <img src="{% if post.user.profile_picture %}{{ post.user.profile_picture.url }}{% else %}{% static 'img/user_img/default_user.jpg' %}{% endif %}" alt="{{ post.user.username }} {{ post.user.email }}" class="mr-3 rounded-circle">
                         </a>
                         <div>
-                            <p class="user-name">{{ post.user }}</p>
+                            <a href="{% url 'custom_auth:user_details' pk=post.user.id %}">
+                                <p class="user-name">{{ post.user.username }}</p>
+                            </a>
                         </div>
                     </div>
                     <div class="card-body">

@@ -1,5 +1,6 @@
+
 {% load static %}
-<!doctype html>
+
 <html lang="en" data-bs-theme="auto">
   <head><script src="{% static 'js/color-modes.js' %}"></script>
 
@@ -175,17 +176,18 @@
             <strong>Micro Twitter</strong>
         </a>
         <div class="d-flex align-items-center">
-            {% if user.is_staff %}
+            {% if current_user.is_staff %}
 
             {% endif %}
             <div>
-                {% if user.is_authenticated %}
-                <span class="me-3 text-white">{{ user.username }}</span>
+                {% if current_user.is_authenticated %}
+                <span class="me-3 text-white">{{ current_user.username }}</span>
                 <a href="{% url 'posts:add_post' %}" class="btn btn-outline-info my-2 my-sm-0">Add Post</a>
 
                 {% else %}
                 <a href="{% url 'custom_auth:login' %}" class="btn btn-outline-info my-2 my-sm-0">Log in</a>
                 <a href="{% url 'custom_auth:register' %}" class="btn btn-outline-info my-2 my-sm-0">Sign Up</a>
+
                 {% endif %}
                 <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
