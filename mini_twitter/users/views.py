@@ -1,11 +1,30 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.views.generic import UpdateView
 from .models import Users
 from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm
-from django.db.models import F
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.contrib import messages
+from .forms import UserProfileForm
 
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = Users
+    # form_class = UserProfileForm
+    fields = ["bio", "profile_picture"]
+    template_name = "users/edit_profile.html"
+    success_url = '/posts/'
+
+    def get_object(self, queryset=None):
+        # return self.request.user #get current logged user
+        return Users.objects.get(user=self.request.user)
+
+    def form_valid(self, form):
+        print("Sending form data...", form.cleaned_data)
+        messages.success(self.request, 'Profile successfully updated!')
+        return super().form_valid(form)
 
 # class UsersListView(ListView):
 #     model = Users
@@ -36,20 +55,20 @@ from django.contrib.auth import update_session_auth_hash
 #         return context
 
 
-@login_required
-def edit_profile(request, user_id):
-    user_profile = get_object_or_404(Users, user__id=user_id)
-
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, user_profile.user)
-            return redirect('custom_auth:user_details', user_id=user_id)
-    else:
-        form = UserProfileForm(instance=user_profile)
-
-    return render(request, 'users/edit_profile.html', {'form': form})
+# @login_required
+# def edit_profile(request, user_id):
+#     user_profile = get_object_or_404(CustomUser, user__id=user_id)
+#
+#     if request.method == 'POST':
+#         form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+#         if form.is_valid():
+#             form.save()
+#             update_session_auth_hash(request, user_profile.user)
+#             return redirect('custom_auth:user_details', user_id=user_id)
+#     else:
+#         form = UserProfileForm(instance=user_profile)
+#
+#     return render(request, 'users/edit_profile.html', {'form': form})
 
 
 

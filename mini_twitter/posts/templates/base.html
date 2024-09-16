@@ -160,8 +160,8 @@
         <div class="col-sm-4 offset-md-1 py-4">
           <h4>User settings</h4>
           <ul class="list-unstyled">
-            <li><a href="{% url 'users:edit_profile' user_id=user.id %}" class="text-white">Edit profile</a></li>
-            <li><a href="#" class="text-white">My Posts</a></li>
+            <li><a href="{% url 'users:edit_profile' %}" class="text-white">Edit profile</a></li>
+            <li><a href="{% url 'posts:posts_list' %}" class="text-white">My Posts</a></li>
             <li><a href="{% url 'custom_auth:logout' %}" class="text-white">Log Out</a></li>
               {% endif %}
           </ul>

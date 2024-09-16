@@ -12,15 +12,21 @@
 
             <li class="list-group-item">
                 <div class="media">
-                    {% if user.profile_picture %}
-                        <img src="{{ user.profile_picture.url }}" alt="{{ user.username }} {{ user.email }}" class="mr-3 rounded-circle" style="height: 100px; width: 100px; object-fit: cover;">
+                    {% if user.users.profile_picture %}
+                        <img src="{{ user.users.profile_picture.url }}" alt="{{ user.username }} {{ user.email }}" class="mr-3 rounded-circle" style="height: 100px; width: 100px; object-fit: cover;">
                     {% else %}
                         <img src="{% static 'img/user_img/default_user.jpg' %}" alt="{{ user.username }} {{ user.email }}" class="mr-3 rounded-circle" style="height: 100px; width: 100px; object-fit: cover;">
                     {% endif %}
                     <div class="media-body">
                         <a href="{% url 'custom_auth:user_details' pk=user.id %}">
-                        <h5 class="mt-0">{{ user.username }}</h5>
+                        <h4 class="mt-0">{{ user.username }}</h4>
                         </a>
+                        <h5 class="mt-0">
+                            {% if user.users.bio %}
+                            {{ user.users.bio }}</h5>
+                            {% else %}
+                            <p>No user bio</p>
+                            {% endif %}
                         <h6 class="mt-0">{{ user.email}}</h6>
                         <p> Date joined: {{ user.date_joined|date:'d.m.Y' }}</p>
                         <p> ID = : {{ user.id }}</p>
